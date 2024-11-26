@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class ItemRepositoryImpl implements ItemRepository {
-    private static int itemId = 0;
+    private int itemId = 0;
     private final Map<Long, Item> items = new HashMap<>();
     private final Map<Long, List<Item>> userItemIndex = new LinkedHashMap<>();
 

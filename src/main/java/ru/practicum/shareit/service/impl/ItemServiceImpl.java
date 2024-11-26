@@ -56,19 +56,18 @@ public class ItemServiceImpl implements ItemService {
         String name = itemDto.getName();
         String description = itemDto.getDescription();
         Boolean available = itemDto.getAvailable();
-        if (item.getOwnerId() == userId) {
-            if (name != null && !name.isBlank()) {
-                item.setName(name);
-            }
-            if (description != null && !description.isBlank()) {
-                item.setDescription(description);
-            }
-            if (available != null) {
-                item.setAvailable(available);
-            }
-        } else {
+        if (item.getOwnerId() != userId) {
             throw new WrongOwnerException(String.format("Пользователь с id %s не является владельцем %s",
                     userId, name));
+        }
+        if (name != null && !name.isBlank()) {
+            item.setName(name);
+        }
+        if (description != null && !description.isBlank()) {
+            item.setDescription(description);
+        }
+        if (available != null) {
+            item.setAvailable(available);
         }
         return ItemMapper.toDto(item);
     }

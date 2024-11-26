@@ -9,7 +9,7 @@ import java.util.*;
 
 @Component
 public class UserRepositoryImpl implements UserRepository {
-    private static int userId = 0;
+    private int userId = 0;
     private final Map<Long, User> users = new HashMap<>();
 
     @Override
