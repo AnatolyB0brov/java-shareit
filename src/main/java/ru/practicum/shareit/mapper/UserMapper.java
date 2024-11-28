@@ -13,10 +13,10 @@ public final class UserMapper {
     }
 
     public static User toEntity(UserDto userDto) {
-        return User.builder()
-                .id(userDto.getId())
-                .name(userDto.getName())
-                .email(userDto.getEmail())
-                .build();
+        return new User(
+                userDto.getId(),
+                userDto.getName(),
+                userDto.getEmail()
+                );
     }
 }

@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+
 @RestControllerAdvice
 public class ErrorHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler({MethodArgumentNotValidException.class, ItemNotAvailableForBookingException.class,
+            WrongDatesException.class, BookingNotOwnerException.class,
+            UnsupportedStatusException.class, NotBookerException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse validationException(final MethodArgumentNotValidException e) {
         return new ErrorResponse(e.getMessage());
@@ -22,7 +25,8 @@ public class ErrorHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler
+    @ExceptionHandler({EntityNotFoundException.class, IllegalViewAndUpdateException.class,
+            BookOwnItemsException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse entityNotFoundException(final EntityNotFoundException e) {
         return new ErrorResponse(e.getMessage());
@@ -36,7 +40,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponse notOwnerException(final WrongOwnerException e) {
+    public ErrorResponse notOwnerException(final NotOwnerException e) {
         return new ErrorResponse(e.getMessage());
     }
 

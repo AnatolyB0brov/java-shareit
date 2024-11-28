@@ -14,6 +14,6 @@ public class UserDto {
     @NotBlank(groups = {Add.class})
     private String name;
     @NotEmpty(groups = {Add.class})
-    @Email(groups = {Add.class})
+    @Email(groups = {Add.class, UserDto.class})
     private String email;
 }
