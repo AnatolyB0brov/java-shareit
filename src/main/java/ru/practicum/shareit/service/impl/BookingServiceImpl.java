@@ -84,14 +84,13 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Booking> getAllByBooker(String state, long bookerId) {
         User booker = getUser(bookerId);
-        List<Booking> bookings;
         BookingState bookingState;
         try {
             bookingState = BookingState.valueOf(state);
         } catch (IllegalArgumentException e) {
             throw new UnsupportedStatusException("UnsupportedStatusException");
         }
-        bookings = switch (bookingState) {
+        return switch (bookingState) {
             case ALL -> bookingRepository.findAllByBookerId(booker.getId(), Sort.by(DESC, "start"));
             case CURRENT -> bookingRepository.findAllByBookerIdAndStateCurrent(booker.getId(),
                     Sort.by(Sort.Direction.DESC, "start"));
@@ -104,21 +103,19 @@ public class BookingServiceImpl implements BookingService {
             case REJECTED -> bookingRepository.findAllByBookerIdAndStatus(booker.getId(),
                     BookingStatus.REJECTED, Sort.by(DESC, "end"));
         };
-        return bookings;
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Booking> getAllByOwner(long ownerId, String state) {
         User owner = getUser(ownerId);
-        List<Booking> bookings;
         BookingState bookingState;
         try {
             bookingState = BookingState.valueOf(state);
         } catch (IllegalArgumentException e) {
             throw new UnsupportedStatusException("UnsupportedStatusException");
         }
-        bookings = switch (bookingState) {
+        return switch (bookingState) {
             case ALL -> bookingRepository.findAllByOwnerId(owner.getId(),
                     Sort.by(Sort.Direction.DESC, "start"));
             case CURRENT -> bookingRepository.findAllByOwnerIdAndStateCurrent(owner.getId(),
@@ -132,7 +129,6 @@ public class BookingServiceImpl implements BookingService {
             case REJECTED -> bookingRepository.findAllByOwnerIdAndStatus(owner.getId(),
                     BookingStatus.REJECTED, Sort.by(Sort.Direction.DESC, "start"));
         };
-        return bookings;
     }
 
     @Transactional(readOnly = true)

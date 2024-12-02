@@ -25,25 +25,25 @@ public class BookingController {
 
     @PatchMapping("/{bookingId}")
     public Booking approve(@PathVariable long bookingId, @RequestParam(name = "approved") Boolean isApproved,
-                           @RequestHeader(Constants.HEADER_USER_ID) long userId) {
+                                 @RequestHeader(Constants.HEADER_USER_ID) long userId) {
         return bookingService.approve(bookingId, isApproved, userId);
     }
 
     @GetMapping("/{bookingId}")
     public Booking getBookingById(@PathVariable long bookingId,
-                                  @RequestHeader(Constants.HEADER_USER_ID) long userId) {
+                                        @RequestHeader(Constants.HEADER_USER_ID) long userId) {
         return bookingService.getBookingById(bookingId, userId);
     }
 
     @GetMapping
     public List<Booking> getAllByBooker(@RequestParam(name = "state", defaultValue = "ALL") String state,
-                                        @RequestHeader(Constants.HEADER_USER_ID) long bookerId) {
+                                              @RequestHeader(Constants.HEADER_USER_ID) long bookerId) {
         return bookingService.getAllByBooker(state, bookerId);
     }
 
     @GetMapping("/owner")
     public List<Booking> getAllByOwner(@RequestParam(name = "state", defaultValue = "ALL") String state,
-                                       @RequestHeader(Constants.HEADER_USER_ID) long ownerId) {
+                                             @RequestHeader(Constants.HEADER_USER_ID) long ownerId) {
         return bookingService.getAllByOwner(ownerId, state);
     }
 }

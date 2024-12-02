@@ -21,7 +21,7 @@ public class ItemController {
 
     @PostMapping
     public ItemDtoOut addItem(@Validated(Add.class) @RequestBody ItemDtoIn itemDtoIn,
-                              @RequestHeader(Constants.HEADER_USER_ID) long userId) {
+                                  @RequestHeader(Constants.HEADER_USER_ID) long userId) {
         return itemService.addItem(itemDtoIn, userId);
     }
 

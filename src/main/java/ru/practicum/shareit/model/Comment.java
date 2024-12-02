@@ -17,7 +17,7 @@ public class Comment {
     private long id;
 
     @Column(nullable = false)
-    private String text;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "item_id")

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public final class CommentMapper {
     public static CommentDto toCommentDtoOut(Comment comment) {
         return new CommentDto(comment.getId(),
-                comment.getText(),
+                comment.getContent(),
                 comment.getAuthor().getName(),
                 comment.getCreated());
     }
@@ -19,7 +19,7 @@ public final class CommentMapper {
         Comment comment = new Comment();
         comment.setItem(item);
         comment.setAuthor(author);
-        comment.setText(commentDto.getText());
+        comment.setContent(commentDto.getText());
         comment.setCreated(LocalDateTime.now());
         return comment;
     }
