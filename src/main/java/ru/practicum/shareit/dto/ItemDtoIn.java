@@ -8,7 +8,7 @@ import ru.practicum.shareit.validationgroup.Add;
 
 @Data
 @Builder
-public class ItemDto {
+public class ItemDtoIn {
     private long id;
     @NotBlank(groups = {Add.class})
     private String name;

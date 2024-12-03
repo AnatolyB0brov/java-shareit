@@ -2,13 +2,13 @@ package ru.practicum.shareit.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.exception.EntityNotFoundException;
-import ru.practicum.shareit.exception.DuplicateEmailException;
 import ru.practicum.shareit.dto.UserDto;
 import ru.practicum.shareit.mapper.UserMapper;
 import ru.practicum.shareit.model.User;
-import ru.practicum.shareit.repository.UserRepository;
 import ru.practicum.shareit.service.UserService;
+import ru.practicum.shareit.exception.EntityNotFoundException;
+import ru.practicum.shareit.exception.DuplicateEmailException;
+import ru.practicum.shareit.repository.UserRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<UserDto> findAll() {
+    public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream().map(UserMapper::toDto).collect(Collectors.toList());
     }
 

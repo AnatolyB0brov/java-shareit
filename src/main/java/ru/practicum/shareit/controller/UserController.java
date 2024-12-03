@@ -18,7 +18,7 @@ public class UserController {
 
     @GetMapping
     public List<UserDto> getUsers() {
-        return userService.findAll();
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{userId}")
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDto createUser(@Validated(Add.class) @RequestBody UserDto userDto) {
+    public UserDto addUser(@Validated(Add.class) @RequestBody UserDto userDto) {
         return userService.addUser(userDto);
     }
 
