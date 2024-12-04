@@ -46,7 +46,6 @@ public class ItemRequestServiceImpl implements ItemRequestService {
         request.setRequestor(requestor);
         return ItemRequestMapper.toItemRequestDtoOut(requestRepository.save(request));
     }
-
     @Override
     public List<ItemRequestDtoOut> getRequestsByRequestor(long userId) {
         log.info("Получение всех запросов по просителю с идентификатором {}", userId);
@@ -54,7 +53,6 @@ public class ItemRequestServiceImpl implements ItemRequestService {
         List<ItemRequest> requests = requestRepository.findAllByRequestorId(userId, Sort.by(DESC, "created"));
         return addItems(requests);
     }
-
     @Override
     public List<ItemRequestDtoOut> getAllRequests(Integer from, Integer size, long userId) {
         log.info("Получение всех запросов постранично");
@@ -63,7 +61,6 @@ public class ItemRequestServiceImpl implements ItemRequestService {
         List<ItemRequest> requests = requestRepository.findAllByRequestorIdIsNot(userId, pageable);
         return addItems(requests);
     }
-
     @Override
     public ItemRequestDtoOut getRequestById(long requestId, long userId) {
         log.info("Получение запроса по идентификатору {}", requestId);

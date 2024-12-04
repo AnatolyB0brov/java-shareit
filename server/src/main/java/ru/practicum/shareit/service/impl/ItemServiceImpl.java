@@ -115,7 +115,7 @@ public class ItemServiceImpl implements ItemService {
             throw new NotBookerException("Сущность не пользовался вещью");
         }
         Comment comment = commentRepository.save(CommentMapper.toComment(commentDto, item, user));
-        return CommentMapper.toCommentDtoOut(comment);
+        return CommentMapper.toCommentDto(comment);
     }
 
     private ItemDtoOut addBookingsAndComments(Item item, long userId) {
@@ -138,7 +138,7 @@ public class ItemServiceImpl implements ItemService {
 
         itemDtoOut.setComments(commentRepository.findAllByItemId(itemDtoOut.getId())
                 .stream()
-                .map(CommentMapper::toCommentDtoOut)
+                .map(CommentMapper::toCommentDto)
                 .collect(toList()));
 
         return itemDtoOut;
@@ -177,7 +177,7 @@ public class ItemServiceImpl implements ItemService {
             }
             List<CommentDto> commentDtos = itemsWithComments.getOrDefault(item, Collections.emptyList())
                     .stream()
-                    .map(CommentMapper::toCommentDtoOut)
+                    .map(CommentMapper::toCommentDto)
                     .collect(toList());
             itemDtoOut.setComments(commentDtos);
 

@@ -19,6 +19,7 @@ import ru.practicum.shareit.service.BookingService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
@@ -34,12 +35,31 @@ public class BookingServiceImpl implements BookingService {
     public Booking addBooking(BookingItemDto bookingItemDtoIn, long userId) {
         User booker = getUser(userId);
         Item item = getItem(bookingItemDtoIn.getItemId());
+        if (Objects.equals(booker.getId(), item.getOwner().getId())) {
+            throw new BookOwnItemsException("Нельзя забронировать свою вещь");
+        }
+        if (bookingItemDtoIn.getStart() == null) {
+            throw new WrongDatesException("Дата начала бронирования не может быть null.");
+        }
+
+        if (bookingItemDtoIn.getEnd() == null) {
+            throw new WrongDatesException("Дата окончания бронирования не может быть null.");
+        }
+
         if (!item.getAvailable()) {
             throw new ItemNotAvailableForBookingException("Вещь недоступна для брони");
         }
-        if (booker.getId() == item.getOwner().getId()) {
-            throw new BookOwnItemsException("Нельзя забронировать свою вещь");
+        if (Long.valueOf(userId).equals(item.getOwner().getId())) {
+            throw new ItemNotAvailableForBookingException("Функция бронировать собственную вещь отсутствует");
         }
+
+        if (bookingItemDtoIn.getStart().isBefore(LocalDateTime.now())) {
+            throw new WrongDatesException("Дата начала бронирования не может быть в прошлом.");
+        }
+        if (bookingItemDtoIn.getEnd().isBefore(bookingItemDtoIn.getStart())) {
+            throw new WrongDatesException("Дата окончания бронирования должна быть позже даты начала.");
+        }
+
         if (!bookingItemDtoIn.getEnd().isAfter(bookingItemDtoIn.getStart()) ||
                 bookingItemDtoIn.getStart().isBefore(LocalDateTime.now())) {
             throw new WrongDatesException("Неверная дата бронирования");

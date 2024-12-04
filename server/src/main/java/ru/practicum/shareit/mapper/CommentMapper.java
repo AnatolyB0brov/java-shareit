@@ -12,7 +12,7 @@ public final class CommentMapper {
     private CommentMapper() {
     }
 
-    public static CommentDto toCommentDtoOut(Comment comment) {
+    public static CommentDto toCommentDto(Comment comment) {
         return new CommentDto(comment.getId(),
                 comment.getContent(),
                 comment.getAuthor().getName(),
