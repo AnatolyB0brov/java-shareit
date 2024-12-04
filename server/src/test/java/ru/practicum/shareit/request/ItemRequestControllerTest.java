@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.practicum.shareit.constant.Constants;
 import ru.practicum.shareit.controller.ItemRequestController;
 import ru.practicum.shareit.dto.ItemRequestDtoOut;
 import ru.practicum.shareit.service.ItemRequestService;
@@ -48,7 +49,7 @@ class ItemRequestControllerTest {
                         .content(mapper.writeValueAsString(requestDto))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("X-Sharer-User-Id", 1L)
+                        .header(Constants.HEADER_USER_ID, 1L)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(requestDto)))
@@ -65,7 +66,7 @@ class ItemRequestControllerTest {
                         .content(mapper.writeValueAsString(requestDto))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("X-Sharer-User-Id", 1L)
+                        .header(Constants.HEADER_USER_ID, 1L)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(List.of(requestDto))));
@@ -79,7 +80,7 @@ class ItemRequestControllerTest {
                         .content(mapper.writeValueAsString(requestDto))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("X-Sharer-User-Id", 1L)
+                        .header(Constants.HEADER_USER_ID, 1L)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(List.of(requestDto))));
@@ -93,7 +94,7 @@ class ItemRequestControllerTest {
                         .content(mapper.writeValueAsString(requestDto))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("X-Sharer-User-Id", 1L)
+                        .header(Constants.HEADER_USER_ID, 1L)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(requestDto)));

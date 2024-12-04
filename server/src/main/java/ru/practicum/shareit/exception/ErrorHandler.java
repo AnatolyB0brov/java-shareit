@@ -14,8 +14,7 @@ public class ErrorHandler {
 
 
     @ExceptionHandler({MethodArgumentNotValidException.class, ItemNotAvailableForBookingException.class,
-            WrongDatesException.class, BookingNotOwnerException.class,
-            UnsupportedStatusException.class, NotBookerException.class})
+            WrongDatesException.class, UnsupportedStatusException.class, NotBookerException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse validateException(RuntimeException e) {
         return new ErrorResponse(e.getMessage());
