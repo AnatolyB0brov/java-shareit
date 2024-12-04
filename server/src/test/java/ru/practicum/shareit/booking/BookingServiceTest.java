@@ -8,10 +8,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 import ru.practicum.shareit.dto.BookingItemDto;
-import ru.practicum.shareit.dto.UserDto;
 import ru.practicum.shareit.enums.BookingStatus;
 import ru.practicum.shareit.exception.*;
-import ru.practicum.shareit.mapper.BookingMapper;
 import ru.practicum.shareit.model.Booking;
 import ru.practicum.shareit.model.Item;
 import ru.practicum.shareit.model.User;
@@ -19,7 +17,6 @@ import ru.practicum.shareit.repository.BookingRepository;
 import ru.practicum.shareit.repository.ItemRepository;
 import ru.practicum.shareit.repository.UserRepository;
 import ru.practicum.shareit.service.impl.BookingServiceImpl;
-import ru.practicum.shareit.service.impl.UserServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -45,13 +42,8 @@ class BookingServiceTest {
     @InjectMocks
     private BookingServiceImpl bookingService;
 
-    @InjectMocks
-    private UserServiceImpl userService;
-
     private final User user = new User(1L, "User", "user@mail.ru");
-    private final UserDto owner = new UserDto(1L, "Owner", "owner@example.com");
     private final User booker = new User(2L, "user2", "user2@mail.ru");
-    private final UserDto bookerDto = new UserDto(2L, "user2", "user2@mail.ru");
     private final Item item = new Item(1L, "item", "cool", true, user, null);
     private final Booking booking = new Booking(1L,
             LocalDateTime.of(2023, 7, 1, 12, 12, 12),
@@ -63,7 +55,6 @@ class BookingServiceTest {
     private final BookingItemDto bookingDtoWrongItem = new BookingItemDto(
             LocalDateTime.of(2023, 7, 1, 12, 12, 12),
             LocalDateTime.of(2023, 7, 30, 12, 12, 12), 2L);
-    private long bookerId = 1L;
 
     @Test
     void shouldThrowException_whenUser_DoesNotExist() {
@@ -197,7 +188,7 @@ class BookingServiceTest {
         when(userRepository.findById(2L)).thenReturn(Optional.of(booker));
         when(bookingRepository.findAllByBookerIdAndStateFuture(anyLong(), any())).thenReturn(List.of(booking));
 
-        List<Booking> actualBookings = bookingService.getAllByBooker( "FUTURE", 2L);
+        List<Booking> actualBookings = bookingService.getAllByBooker("FUTURE", 2L);
 
         assertEquals(List.of(booking), actualBookings);
     }
@@ -217,7 +208,7 @@ class BookingServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(bookingRepository.findAllByOwnerId(anyLong(), any())).thenReturn(List.of(booking));
 
-        List<Booking> actualBookings = bookingService.getAllByOwner( 1L, "ALL");
+        List<Booking> actualBookings = bookingService.getAllByOwner(1L, "ALL");
 
         assertEquals(List.of(booking), actualBookings);
 
@@ -238,7 +229,7 @@ class BookingServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(bookingRepository.findAllByOwnerIdAndStatePast(anyLong(), any())).thenReturn(List.of(booking));
 
-        List<Booking> actualBookings = bookingService.getAllByOwner( 1L,"PAST");
+        List<Booking> actualBookings = bookingService.getAllByOwner(1L, "PAST");
 
         assertEquals(List.of(booking), actualBookings);
     }
@@ -248,7 +239,7 @@ class BookingServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(bookingRepository.findAllByOwnerIdAndStateFuture(anyLong(), any())).thenReturn(List.of(booking));
 
-        List<Booking> actualBookings = bookingService.getAllByOwner( 1L,"FUTURE");
+        List<Booking> actualBookings = bookingService.getAllByOwner(1L, "FUTURE");
 
         assertEquals(List.of(booking), actualBookings);
     }
@@ -297,7 +288,7 @@ class BookingServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(bookingRepository.findAllByOwnerId(anyLong(), any())).thenReturn(Collections.emptyList());
 
-        List<Booking> actualBookings = bookingService.getAllByOwner(1L,"ALL");
+        List<Booking> actualBookings = bookingService.getAllByOwner(1L, "ALL");
 
         Assertions.assertTrue(actualBookings.isEmpty());
     }
@@ -308,7 +299,7 @@ class BookingServiceTest {
         lenient().when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         Assertions.assertThrows(UnsupportedStatusException.class, () ->
-                bookingService.getAllByOwner(1L,"INVALID_STATE"));
+                bookingService.getAllByOwner(1L, "INVALID_STATE"));
     }
 
 
@@ -338,7 +329,7 @@ class BookingServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(bookingRepository.findAllByOwnerId(anyLong(), any())).thenReturn(Collections.emptyList());
 
-        List<Booking> actualBookings = bookingService.getAllByOwner( 1L,"ALL");
+        List<Booking> actualBookings = bookingService.getAllByOwner(1L, "ALL");
 
         Assertions.assertTrue(actualBookings.isEmpty());
     }
@@ -574,7 +565,7 @@ class BookingServiceTest {
         when(userRepository.findById(2L)).thenReturn(Optional.of(booker));
         when(bookingRepository.findAllByBookerIdAndStateFuture(anyLong(), any())).thenReturn(Collections.emptyList());
 
-        List<Booking> actualBookings = bookingService.getAllByBooker( "FUTURE", 2L);
+        List<Booking> actualBookings = bookingService.getAllByBooker("FUTURE", 2L);
         Assertions.assertTrue(actualBookings.isEmpty());
     }
 
@@ -652,7 +643,7 @@ class BookingServiceTest {
                 .thenReturn(List.of(booking));
 
 
-        List<Booking> result = bookingService.getAllByBooker( "ALL", booker.getId());
+        List<Booking> result = bookingService.getAllByBooker("ALL", booker.getId());
 
         assertNotNull(result);
         assertEquals(1, result.size());

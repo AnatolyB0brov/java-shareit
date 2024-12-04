@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.DirtiesContext;
 import ru.practicum.shareit.enums.BookingStatus;
@@ -14,7 +13,6 @@ import ru.practicum.shareit.model.User;
 import ru.practicum.shareit.repository.BookingRepository;
 import ru.practicum.shareit.repository.ItemRepository;
 import ru.practicum.shareit.repository.UserRepository;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
